@@ -14,7 +14,7 @@ Instrukcja obsługi:
 
 Podwójne kliknięcie na przycisk plusa doda obecnośS aktualnego dnia
 
-Kliknięcie na nazwisko spowoduje pokazania na kalendarzu jego obecnośći
+Kliknięcie na nazwisko spowoduje pokazania na kalendarzu obecność wybranej osoby
 
 Podwójne kliknięcie na pomyloną datę na kalendarzu spowoduje usunięcie jej
 

@@ -1,0 +1,62 @@
+.clndr {
+    width: auto;
+    margin-bottom: 7px;
+}
+
+div.clndr div.clndr-controls{
+    margin: 2px 0 7px 0;
+    height: 50px;
+    font-size: 24px;
+    clear: both;
+}
+
+.clndr-control-button:first-child{
+    float: left;
+}
+
+.glyphicon{
+    color: #f0ad4e;
+}
+
+.glyphicon:hover{
+    color: #ec971f;
+}
+
+.clndr-control-button, .month{
+    display: table-cell;
+    padding: 2px 5px;
+}
+
+div.month{
+    width: 235px;
+    text-align: center;
+}
+table.clndr-table thead td {
+    background: #e9e9e9;
+    color: black;
+    text-align: center;
+    border: 1px solid #e9e9e9;
+}
+
+table.clndr-table tbody td{
+    color: white;
+    font-size: 24px;
+}
+
+table.clndr-table tbody td{
+    text-align: center;
+    border: 1px solid #e9e9e9;
+    padding: 7px;
+}
+
+.clndr-table td.marked{
+    background: #f0ad4e;
+    border-left: 1px solid #eea236 !important;
+    border-top: 1px solid #eea236 !important;
+    border-right: 1px solid black !important;
+    border-bottom: 1px solid black !important;
+}
+
+.clndr-table td.marked:hover{
+    background: #ec971f;
+}

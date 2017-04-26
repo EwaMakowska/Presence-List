@@ -1,4 +1,4 @@
-/*global $, presenceList.shell */
+/*global $, presenceList */
             
 var presenceList = (function(){
     var init = function ($container){
@@ -11,7 +11,8 @@ presenceList.shell = (function () {
     var
     db = {
         connect: (function(){
-            var config = {
+            var config;
+            config = {
                 apiKey: "AIzaSyBW0mloHb0wOH3Nwj5azFSQpYvDONdpEiM",
                 authDomain: "attendancelist-3208b.firebaseapp.com",
                 databaseURL: "https://attendancelist-3208b.firebaseio.com",
@@ -23,12 +24,13 @@ presenceList.shell = (function () {
         }()),
         
         select: function(col, func){
+            var col, func, refDb;
             
             if(func == null){
                 func = function(){};
             };
             
-            var refDb = firebase.database().ref().child(col);
+            refDb = firebase.database().ref().child(col);
             refDb.on('value', func);
             return refDb;
         }
@@ -76,21 +78,23 @@ presenceList.shell = (function () {
         }
     },
     
-    jQueryDialog = function(opt){
+    jQueryDialog = function(funcName){
+        var funcName, dialogBt, height, opener, toOpen;
         
-        if(opt == 'help'){
-            var dialogBt = {
+        if(funcName == 'help'){
+            dialogBt = {
                 Ok: function() {
                     $(this).dialog("close");
                     return false;
                 }
             };
-            var height = 300;
-            var opener = "#help";
-            var toOpen = "#dialogHelp";
-        }
-        else if(opt == 'conf'){
-            var dialogBt = {
+            height = 300;
+            opener = "#help";
+            toOpen = "#dialogHelp";
+        };
+        
+        if(funcName == 'deleteAction'){
+            dialogBt = {
                     OK:  function() {
                         $(this).dialog("close");
                         jQueryDialogCallback(true);
@@ -100,21 +104,22 @@ presenceList.shell = (function () {
                         jQueryDialogCallback(false);
                     }  
             };
-            var height = 200;
-            var opener = ".marked";
-            var toOpen = "#dialogDeleteCorf";
-        }
-        else if(opt == 'addInfBtAction'){
-            var dialogBt = {
+            height = 200;
+            opener = ".marked";
+            toOpen = "#dialogDeleteCorf";
+        };
+        
+        if(funcName == 'addInfBtAction'){
+            dialogBt = {
                 Ok: function() {
                     $(this).dialog("close");
                     return false;
                 }
             };
-            var height = 200;
+            height = 200;
             opener = '#groupBts button#addInfBt';
             toOpen = "#addSuccesfully";
-        }
+        };
         
         $("#dialogHelp, #dialogDeleteCorf, #addSuccesfully").dialog({
             hide: "puff",
@@ -133,22 +138,24 @@ presenceList.shell = (function () {
     addInfBtAction = function(){
         
         $('#groupBts button#addInfBt').on('click',function(){
-            var temp = {};
-            var empId = $(this).attr("empId");
-            var today = moment().format("DD-MM-YYYY");
+            var
+            temp = {},
+            empId = $(this).attr("empId"),
+            today = moment().format("DD-MM-YYYY");
             
             temp[today] = today;
             db.select("data/"+empId, null).update(temp);
             jQueryDialog('addInfBtAction');           
         });
-        
     };
     
     showInfBtAction = function(){
         
         $('#groupBts button#showInfBt').on('click',function(){
-            var empId = $(this).attr("empId");
-            dataFromCalArr = [];
+            var empId = $(this).attr("empId"),
+            dataFromCalArr = [],
+            temp;
+            
             $('.clndr-table td.day').removeClass('marked');
             
             $('.clndr-table .day').each(function(){
@@ -167,6 +174,7 @@ presenceList.shell = (function () {
                         });
                     }
                 });
+            return true;    
             };
             db.select("data/"+empId, getDataFromDb);
         });
@@ -176,16 +184,19 @@ presenceList.shell = (function () {
     deleteAction = function(empId){
         
         $('.marked').click(function(){
+            var temp, del, that;
+            
             temp = $(this).attr('class').indexOf('-day-')+4;
             del = $(this).attr('class').substr(temp+1,10);
-            var that = this;
-            jQueryDialog('conf');
+            that = this;
+            jQueryDialog('deleteAction');
             
             jQueryDialogCallback = function (val){
                 if(val == true){
                     db.select("data/"+empId+"/"+del, null).remove();
                     $(that).removeClass('marked');
                 }
+                return true;
             };
         });
         
@@ -228,4 +239,3 @@ presenceList.shell = (function () {
     
     return {init: init};
 }());
-
